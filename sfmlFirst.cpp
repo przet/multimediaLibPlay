@@ -31,8 +31,33 @@ struct MyFunctor
 
     void operator()()
     {
-        /*for (int i = 0;i < 10; ++i)
-            std::cout << "I have thread entry point into a functor! " << std::endl;*/
+        for (int i = 0;i < 10; ++i)
+            std::cout << "I have thread entry point into a functor! " << std::endl;
+
+    }
+};
+
+struct MyFunctor2
+{
+
+    void operator()(int x)
+    {
+        if (x == 4)
+            for (int i = 0; i < 10; ++i)
+                std::cout << "I have thread entry point into a functor, FUNCTOR NUMBER 2! " << std::endl;
+        else
+            std::cout << "I have thread entry point into a function BUT the argument is NOT 4" << std::endl;
+
+    }
+};
+
+struct MyFunctor3
+{
+
+    void operator()()
+    {
+        for (int i = 0;i < 10; ++i)
+            std::cout << "I have thread entry point into a functor, NuMbEr threeeeee! " << std::endl;
 
     }
 };
@@ -41,7 +66,7 @@ void updateGame(sf::Clock& clock, sf::Time& elapsed, sf::RenderWindow& window,
         sf::CircleShape &shape)
 {
     
-    sf::ConvexShape shape2(300.f);
+    sf::ConvexShape shape2(300);
     elapsed = clock.getElapsedTime();
     while (elapsed.asSeconds() <10000)
     {
@@ -62,6 +87,7 @@ void updateGame(sf::Clock& clock, sf::Time& elapsed, sf::RenderWindow& window,
 
 int main()
 {
+    
     sf::Thread thread(&func);
     thread.launch();
     sf::Thread thread2(&func2, 5);
@@ -69,9 +95,16 @@ int main()
     MyClass myObject;
     sf::Thread thread3(&MyClass::func, &myObject);
     thread3.launch();
-    sf::Thread thread4(MyFunctor());
-    //thread4.launch();//TODO: how to launch? and not its NOT &MyFunctor
-    sf::Thread thread5([]() {std::cout << "I have entry point via a lambda(which is just ss for a functor" << std::endl;});
+    MyFunctor myFunctorObj;
+    sf::Thread thread4(myFunctorObj);
+    thread4.launch();
+    MyFunctor2 myFunctor2Obj;
+    sf::Thread thread4_a(myFunctor2Obj, 4);
+    thread4_a.launch();
+    sf::Thread thread4_b((MyFunctor3())); //THIS works...but I need the extra parantheses around MyFunctor3()...otherwise, I will get an error expecting a class.
+                                          //But the tutorials and docs on SFML all omit these paraenteses...I wonder if its compiler version?
+    thread4_b.launch();
+    sf::Thread thread5([]() {std::cout << "I have entry point via a lambda(which is just ss for a functor)" << std::endl;});
     thread5.launch();
     
 
