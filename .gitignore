@@ -39,3 +39,6 @@
 *.pdb
 *.tlog
 *.ilk
+graphics/osg/VariousInitial/.vs/
+*.iobj
+*.ipdb
