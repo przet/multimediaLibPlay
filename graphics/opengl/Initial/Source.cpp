@@ -46,11 +46,11 @@ void display()
 	glRectfv(&corner1[0], &corner2[0]);
 	
 	colorise({ 1.0f, 0.0f, 0.0f });
+	glPointSize(8.0f);
 	glBegin(GL_POINTS);
 		glVertex2f(0.5f, 0.5f);
 	glEnd();
 
-	
 	glFlush();
 }
 
