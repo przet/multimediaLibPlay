@@ -40,11 +40,20 @@ void initViewing(const std::vector<float>& orthoValue)
 void display()
 {
 	clearAllPixels();
+	colorise({ 0.0f, 1.0f, 0.0f });
 	std::array<float, 2> corner1{ 0.25f, 0.25f };
 	std::array<float, 2> corner2{ 0.75f, 0.75f };
 	glRectfv(&corner1[0], &corner2[0]);
+	
+	colorise({ 1.0f, 0.0f, 0.0f });
+	glBegin(GL_POINTS);
+		glVertex2f(0.5f, 0.5f);
+	glEnd();
+
+	
 	glFlush();
 }
+
 
 void init()
 {
