@@ -51,8 +51,15 @@ void display()
 		glVertex2f(0.5f, 0.5f);
 	glEnd();
 
+	colorise({ 0.0f, 0.0f, 1.0f });
+	glBegin(GL_LINES);
+		glVertex2f(0.5f, 0.6f);
+		glVertex2f(0.5f, 0.8f);
+	glEnd();
+
 	glFlush();
 }
+
 
 
 void init()
