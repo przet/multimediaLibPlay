@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <stdexcept>
+#include <array>
 
 void clearAllPixels()
 {
@@ -15,28 +16,6 @@ void colorise(const std::vector<float>& color)
 		throw std::logic_error("input color vector to " + std::string(__func__) + " must be at least size 3");
 
 	glColor3f(color[0], color[1], color[2]);
-}
-
-void drawRectangle_2D(const std::vector<float>& bottomLCorner,
-	const std::vector<float>& topRCorner, const std::vector<float>& color, bool wait = false)
-{
-	if (std::size(bottomLCorner) < 2 || std::size(topRCorner) < 2) 
-		throw std::logic_error("input corner vectors to " + std::string(__func__) + " must be at least size 2");
-
-
-	std::vector<float> bottomRCorner{ topRCorner[0], bottomLCorner[1], 0 };
-	std::vector<float> topLCorner{ bottomLCorner[0], topRCorner[1], 0 };
-
-	colorise(color);
-	glBegin(GL_POLYGON);
-		glVertex3f(bottomLCorner[0], bottomLCorner[1], 0 );
-		glVertex3f(bottomRCorner[0], bottomRCorner[1], 0 );
-		glVertex3f(topRCorner[0], topRCorner[1], 0 );
-		glVertex3f(topLCorner[0], topLCorner[1], 0 );
-	glEnd();
-
-	if (!wait)
-		glFlush();
 }
 
 void clearingColor(const std::vector<float>& color = {0.0f, 0.0f, 0.0f, 0.0f})
@@ -61,7 +40,10 @@ void initViewing(const std::vector<float>& orthoValue)
 void display()
 {
 	clearAllPixels();
-	drawRectangle_2D({ 0.25f, 0.25f }, { 0.75f, 0.75f }, { 1.0f, 1.0f, 1.0f });
+	std::array<float, 2> corner1{ 0.25f, 0.25f };
+	std::array<float, 2> corner2{ 0.75f, 0.75f };
+	glRectfv(&corner1[0], &corner2[0]);
+	glFlush();
 }
 
 void init()
