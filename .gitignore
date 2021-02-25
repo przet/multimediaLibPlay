@@ -42,3 +42,8 @@
 graphics/osg/VariousInitial/.vs/
 *.iobj
 *.ipdb
+*.db-shm
+*.db-wal
+*.opendb
+*.recipe
+graphics/opengl/Initial/Debug/Initial.vcxproj.FileListAbsolute.txt
