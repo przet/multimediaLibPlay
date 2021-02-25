@@ -37,6 +37,17 @@ void initViewing(const std::vector<float>& orthoValue)
 }
 
 
+void drawString(float x, float y, float z, std::string string)
+{
+	glRasterPos3f(x, y, z);
+
+	void* currentFont = GLUT_BITMAP_TIMES_ROMAN_24;
+	for (auto c : string)
+	{
+		glutBitmapCharacter(currentFont, c);
+	}
+
+}
 void display()
 {
 	clearAllPixels();
@@ -56,6 +67,9 @@ void display()
 		glVertex2f(0.5f, 0.6f);
 		glVertex2f(0.5f, 0.8f);
 	glEnd();
+
+	drawString(0.49f, 0.83f, 0.0f, "'ello");
+
 
 	glFlush();
 }
